@@ -39,3 +39,32 @@ Mustache
 3. API 방식 : JSON이라는 데이터 포맷으로 클라이언트에게 전달
 
 모르는거는 어디에?? `https://docs.spring.io/spring-boot/docs/3.0.0/reference/htmlsingle/`
+
+API 방식에서 raw 데이터를 줄 수도 있다.\
+객체를 리턴하는 경우 json 형식으로 준다.
+
+ResponseBody 어노테이션의 작동 방식
+1. HTTP의 BODY에 문자 내용을 직접 반환
+2. viewResolver 대신에 HttpMessageConverter가 동작
+- 문자열 처리 - StringHttpMessageConverter가 동작
+- 객체 처리 - MappingJackson2HttpMessageConverter
+- byte 처리 및 등등 - HttpMessageConverter가 기본으로 등록되어 있다.
+
+객체를 json으로 바꿔주는 대표적인 라이브러리
+- Jackson
+- Gson
+
+일반적인 웹 어플리케이션의 계층 구조
+
+```
+컨트롤러 -> 서비스 -> 레포지토리 -> DB
+\        |        /
+  \     |       /
+       도메인
+```
+컨트롤러 : 웹 MVC의 컨트롤러 역할\
+서비스 : 핵심 비즈니스 로직 구현\
+리포지토리 : 데이터 베이스에 접근, 도메인 객체를 DB에 저장, 관리\
+도메인 : 비즈니스 도메인 객체(회원, 주문, 쿠폰.. 주로 데이터 베이스에 저장, 관리)
+
+인터페이스 -> 구현 클래스를 변경할 수 있게 만듦
