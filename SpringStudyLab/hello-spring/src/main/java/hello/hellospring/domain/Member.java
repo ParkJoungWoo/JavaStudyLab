@@ -1,7 +1,12 @@
 package hello.hellospring.domain;
 
+import javax.persistence.*;
+
+@Entity
 public class Member {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    // 매핑하기 @Column(name="username")
     private String name;
 
 
@@ -21,3 +26,4 @@ public class Member {
         this.id = id;
     }
 }
+// JPA = 인터페이스, 구현체로 hibrate가 있고..

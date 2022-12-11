@@ -1,19 +1,22 @@
 package hello.hellospring.repository;
 
 import hello.hellospring.domain.Member;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-public class MemoryMemberRepository implements MemberRepository{
+
+public class MemoryMemberRepository implements MemberRepository {
 
     private static Map<Long, Member> store = new HashMap<>();
     private static long sequence = 0L;
+
     /*
     동시성 제어를 위해서 concurrentHashMap, autoLong을 사용한다
      */
     @Override
     public Member save(Member member) {
-        member.setId(sequence++);
+        member.setId(++sequence);
         store.put(member.getId(), member);
         return member;
     }
@@ -25,16 +28,15 @@ public class MemoryMemberRepository implements MemberRepository{
 
     @Override
     public Optional<Member> findByName(String name) {
-        return store.values().stream()
-                .filter(member -> member.getName().equals(name))
-                .findAny();
+        return store.values().stream().filter(member -> member.getName().equals(name)).findAny();
     }
 
     @Override
     public List<Member> findAll() {
         return new ArrayList<>(store.values());
     }
-    public void clearStore(){
+
+    public void clearStore() {
         store.clear();
     }
 }
